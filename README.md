@@ -1,2 +1,2 @@
-## ToDo → Trello로 만들기
+## Trello 만들기
 
