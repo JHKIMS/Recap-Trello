@@ -28,16 +28,32 @@ function App() {
   const onDragEnd = (info: DropResult) => {
     console.log(info);
     const {destination, draggableId, source} = info;
+    if(!destination) return;
     if(destination?.droppableId === source.droppableId){
       setToDos((allBoards) => {
        const boardCopy = [...allBoards[source.droppableId]];
+       console.log(boardCopy);
        boardCopy.splice(source.index, 1);
        boardCopy.splice(destination?.index, 0, draggableId);
+       console.log(boardCopy);
         return {
           ...allBoards,
           [source.droppableId]: boardCopy,
         };
       });
+    }
+    if(destination.droppableId !== source.droppableId){ // CrossBoard Movement
+      setToDos((allBoards)=>{
+        const sourceBoard = [...allBoards[source.droppableId]]; // 이동의 시작점인 Board을 알 수 있다.
+        const destinationBoard = [...allBoards[destination.droppableId]]; // 이동이 끝나는 Board
+        sourceBoard.splice(source.index, 1);
+        destinationBoard.splice(destination?.index, 0, draggableId);
+        return {
+          ...allBoards,
+          [source.droppableId]: sourceBoard,
+          [destination.droppableId]: destinationBoard,
+        }
+      })
     }
   };
   return (
