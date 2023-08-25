@@ -32,9 +32,10 @@ function App() {
     if(destination?.droppableId === source.droppableId){
       setToDos((allBoards) => {
        const boardCopy = [...allBoards[source.droppableId]];
+       const taskObj = boardCopy[source.index];
        console.log(boardCopy);
        boardCopy.splice(source.index, 1);
-       boardCopy.splice(destination?.index, 0, draggableId);
+       boardCopy.splice(destination?.index, 0, taskObj);
        console.log(boardCopy);
         return {
           ...allBoards,
@@ -45,9 +46,10 @@ function App() {
     if(destination.droppableId !== source.droppableId){ // CrossBoard Movement
       setToDos((allBoards)=>{
         const sourceBoard = [...allBoards[source.droppableId]]; // 이동의 시작점인 Board을 알 수 있다.
+        const taskObj = sourceBoard[source.index];
         const destinationBoard = [...allBoards[destination.droppableId]]; // 이동이 끝나는 Board
         sourceBoard.splice(source.index, 1);
-        destinationBoard.splice(destination?.index, 0, draggableId);
+        destinationBoard.splice(destination?.index, 0, taskObj);
         return {
           ...allBoards,
           [source.droppableId]: sourceBoard,
