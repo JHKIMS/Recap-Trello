@@ -5,8 +5,7 @@ import { useRef } from "react";
 import { useForm } from "react-hook-form";
 
 const Wrapper = styled.div`
-  padding: 20px 10px;
-  padding-top: 30px;
+  padding-top: 10px;
   border-radius: 5px;
   min-height: 200px;
   display: flex;
@@ -18,15 +17,19 @@ const Title = styled.h2`
   font-weight: 600;
   margin-bottom: 10px;
   font-size: 18px;
-  color: white;
 `;
 const Area = styled.div<IAreaProps>`
   background-color: ${(props) =>
-    props.isDraggingOver ? "lightGray" : props.isDraggingFromThis ? "#fab1a0":"#b2bec3"};
+    props.isDraggingOver
+      ? "#2d3436"
+      : props.isDraggingFromThis
+      ? "#ced6e0"
+      : "transparent"};
   flex-grow: 1;
-  transition: background-color .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
+  padding: 20px;
 `;
-interface IAreaProps{
+interface IAreaProps {
   isDraggingFromThis: boolean;
   isDraggingOver: boolean;
 }
