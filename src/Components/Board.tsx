@@ -8,6 +8,7 @@ import { useSetRecoilState } from "recoil";
 
 const Wrapper = styled.div`
   padding-top: 10px;
+  margin-right: 15px;
   border-radius: 5px;
   min-height: 200px;
   display: flex;
@@ -19,6 +20,7 @@ const Title = styled.h2`
   font-weight: 600;
   margin-bottom: 10px;
   font-size: 18px;
+  color: white;
 `;
 const Area = styled.div<IAreaProps>`
   background-color: ${(props) =>
@@ -52,34 +54,25 @@ interface IForm {
 }
 
 function Board({ toDos, boardId }: IBoardProps) {
-  const setToDos=useSetRecoilState(toDoState);
+  const setToDos = useSetRecoilState(toDoState);
   const { register, setValue, handleSubmit } = useForm<IForm>();
-  const onValid = ({toDo}: IForm) => {
+  const onValid = ({ toDo }: IForm) => {
     const newToDo = {
       id: Date.now(),
       text: toDo,
-    }
-    setToDos(allBoards=>{
-      return{
+    };
+    setToDos((allBoards) => {
+      return {
         ...allBoards,
-        [boardId]: [
-          ...allBoards[boardId], newToDo
-        ]
-      }
-    })
+        [boardId]: [...allBoards[boardId], newToDo],
+      };
+    });
     setValue("toDo", "");
   };
   return (
     <div>
       <Wrapper>
         <Title>{boardId}</Title>
-        <Form onSubmit={handleSubmit(onValid)}>
-          <input
-            {...register("toDo", { required: true })}
-            type="text"
-            placeholder={`Add task on ${boardId}`}
-          />
-        </Form>
         <Droppable droppableId={boardId}>
           {(magic, snapshot) => (
             <Area
@@ -100,6 +93,13 @@ function Board({ toDos, boardId }: IBoardProps) {
             </Area>
           )}
         </Droppable>
+        <Form onSubmit={handleSubmit(onValid)}>
+          <input
+            {...register("toDo", { required: true })}
+            type="text"
+            placeholder={`Add task on ${boardId}`}
+          />
+        </Form>
       </Wrapper>
     </div>
   );
