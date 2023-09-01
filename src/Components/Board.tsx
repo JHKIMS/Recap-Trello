@@ -1,7 +1,6 @@
 import { Droppable } from "react-beautiful-dnd";
 import DragabbleCard from "./DragabbleCard";
 import { styled } from "styled-components";
-import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ITodo, toDoState } from "../atoms";
 import { useSetRecoilState } from "recoil";
@@ -23,16 +22,19 @@ const Title = styled.h2`
   color: white;
 `;
 const Area = styled.div<IAreaProps>`
-  background-color: ${(props) =>
-    props.isDraggingOver
+  background-color: ${(props) => {
+    const { isDraggingOver, isDraggingFromThis, ...rest } = props;
+    return isDraggingOver
       ? "#2d3436"
-      : props.isDraggingFromThis
+      : isDraggingFromThis
       ? "#ced6e0"
-      : "transparent"};
+      : "transparent";
+  }};
   flex-grow: 1;
   transition: background-color 0.3s ease-in-out;
   padding: 20px;
 `;
+
 const Form = styled.form`
   width: 100%;
   input {
@@ -70,7 +72,7 @@ function Board({ toDos, boardId }: IBoardProps) {
     setValue("toDo", "");
   };
   return (
-    <div>
+    <>
       <Wrapper>
         <Title>{boardId}</Title>
         <Droppable droppableId={boardId}>
@@ -93,6 +95,7 @@ function Board({ toDos, boardId }: IBoardProps) {
             </Area>
           )}
         </Droppable>
+        
         <Form onSubmit={handleSubmit(onValid)}>
           <input
             {...register("toDo", { required: true })}
@@ -101,7 +104,7 @@ function Board({ toDos, boardId }: IBoardProps) {
           />
         </Form>
       </Wrapper>
-    </div>
+    </>
   );
 }
 

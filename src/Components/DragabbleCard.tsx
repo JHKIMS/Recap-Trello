@@ -19,18 +19,20 @@ interface IDraggableCardProps {
 
 function DraggableCard({ toDoId, toDoText, index }: IDraggableCardProps) {
   return (
-    <Draggable draggableId={toDoId+""} index={index}>
-      {(magic, snapshot) => (
-        <Card
-          isDragging={snapshot.isDragging}
-          ref={magic.innerRef}
-          {...magic.dragHandleProps}
-          {...magic.draggableProps}
-        >
-          {toDoText}
-        </Card>
-      )}
-    </Draggable>
+    <>
+      <Draggable draggableId={toDoId + ""} index={index}>
+        {(magic, snapshot) => (
+          <Card
+            isDragging={snapshot.isDragging}
+            ref={magic.innerRef}
+            {...magic.dragHandleProps}
+            {...magic.draggableProps}
+          >
+            {toDoText}
+          </Card>
+        )}
+      </Draggable>
+    </>
   );
 }
 

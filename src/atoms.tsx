@@ -16,3 +16,15 @@ export const toDoState = atom<IToDoState>({
         Done: [],
     },
 })
+export const boardState = atom({
+    key: "boardState",
+    default: [],
+})
+export const garbageState = atom({
+    key: "garbageState",
+    default: [],
+})
+export const boardModalState = atom<boolean>({
+    key: "boardModalState",
+    default: false,
+})
